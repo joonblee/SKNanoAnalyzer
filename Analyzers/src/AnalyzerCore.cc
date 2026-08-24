@@ -230,7 +230,7 @@ RVec<Jet> AnalyzerCore::SmearJets(const RVec<Jet> &jets, const RVec<GenJet> &gen
         float this_corr = 1.;
         const float this_jer = myCorr->GetJER(this_jet.Eta(), this_jet.Pt(), fixedGridRhoFastjetAll);
         const float this_sf = myCorr->GetJERSF(this_jet.Eta(), this_jet.Pt(), syst, source);
-        if (matched_idx[i] > 0 && matched_idx[i] < genjets.size()) {
+        if (matched_idx[i] >= 0 && matched_idx[i] < genjets.size()) {
             // found matched jet
             const float matched_genjet_pt = genjets[matched_idx[i]].Pt();
             this_corr += (this_sf-1.) * (1.-matched_genjet_pt/this_jet.Pt());

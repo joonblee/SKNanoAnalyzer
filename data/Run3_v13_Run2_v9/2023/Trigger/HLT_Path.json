@@ -368,16 +368,19 @@
         "lumi": 18064.0
     },
     "HLT_Mu50": {
-        "lumi": 18064.0
+        "lumi": 18064.0,
+        "active": true
     },
     "HLT_Mu55": {
         "lumi": 18064.0
     },
     "HLT_CascadeMu100": {
-        "lumi": 18064.0
+        "lumi": 18064.0,
+        "active": true
     },
     "HLT_HighPtTkMu100": {
-        "lumi": 18064.0
+        "lumi": 18064.0,
+        "active": true
     },
     "HLT_DiPFJet15_NoCaloMatched": {
         "lumi": 18064.0

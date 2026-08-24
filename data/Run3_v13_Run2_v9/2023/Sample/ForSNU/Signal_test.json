@@ -1,0 +1,12 @@
+{
+    "name": "Signal_test",
+    "isMC": 1,
+    "PD": "Signal_test",
+    "xsec": 1.323,
+    "sumsign": 31521156.0,
+    "sumW": 31521156.0,
+    "nmc": 31521156.0,
+    "path": [
+       "/data9/Users/taehee_public/HerwigSample/RKZp_13p6TeV/CMSSW_13_3_1_patch1/src/GEN-Run3Summer23NanoAODv13-00001.root"
+    ]
+}

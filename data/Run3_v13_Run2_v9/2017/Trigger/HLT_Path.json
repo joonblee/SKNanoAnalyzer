@@ -300,16 +300,19 @@
         "lumi": 41477.877400009
     },
     "HLT_Mu50": {
-        "lumi": 41477.877400009
+        "lumi": 41477.877400009,
+        "active": true
     },
     "HLT_Mu55": {
         "lumi": 41477.877400009
     },
     "HLT_OldMu100": {
-        "lumi": 41477.877400009
+        "lumi": 41477.877400009,
+        "active": true
     },
     "HLT_TkMu100": {
-        "lumi": 41477.877400009
+        "lumi": 41477.877400009,
+        "active": true
     },
     "HLT_DiPFJet15_NoCaloMatched": {
         "lumi": 41477.877400009

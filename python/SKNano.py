@@ -446,8 +446,10 @@ def makeHaddJobs(working_dir,argparser,sample):
     job_dict['JobBatchName'] = f"Hadd_{working_dir.split('/')[-1]}_{working_dir.split('/')[-2]}"
     job_dict['output'] = os.path.join(working_dir,"hadd.out")
     job_dict['error'] = os.path.join(working_dir,"hadd.err")
-    job_dict['request_cpus'] = 8
-    job_dict['request_memory'] = 8192
+    #job_dict['request_cpus'] = 8
+    #job_dict['request_memory'] = 8192
+    job_dict['request_cpus'] = 2
+    job_dict['request_memory'] = 4096
 
     return job_dict
 

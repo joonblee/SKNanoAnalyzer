@@ -8,6 +8,8 @@
 #pragma link C++ class ExampleRun+;
 #pragma link C++ class GetEffLumi+;
 #pragma link C++ class Skim_TriLep+;
+#pragma link C++ class Skim_NIsoMuon+;
+#pragma link C++ class NIsoMuon+;
 #pragma link C++ class MeasureJetTaggingEff+;
 #pragma link C++ class MeasureJetTaggingR+;
 #pragma link C++ class Vcb_FH+;

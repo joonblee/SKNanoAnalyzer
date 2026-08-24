@@ -598,10 +598,12 @@
         "lumi": 19517.523849863
     },
     "HLT_Mu50": {
-        "lumi": 19517.523849863
+        "lumi": 19517.523849863,
+        "active": true
     },
     "HLT_TkMu50": {
-        "lumi": 19517.523849863
+        "lumi": 19517.523849863,
+        "active": true
     },
     "HLT_Mu38NoFiltersNoVtx_Photon38_CaloIdL": {
         "lumi": 19517.523849863

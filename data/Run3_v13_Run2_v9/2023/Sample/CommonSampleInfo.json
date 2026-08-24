@@ -1715,5 +1715,14 @@
         "sumsign": 180788.0,
         "sumW": 0.008510655174326587,
         "filterEff": 0.5092619718309859
+    },
+    "RKZp_M12_RS_test": {
+        "isMC": 1,
+        "PD": "RKZp_M12_RS_test",
+        "xsec": 1.0,
+        "nmc": 1.0,
+        "sumsign": 1.0,
+        "sumW": 1.0,
+        "ref": "Private Herwig signal sample; technical test normalization"
     }
 }

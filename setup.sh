@@ -29,7 +29,7 @@ export SKNANO_RUNLOG="/gv0/Users/$USER/SKNanoRunlog"
 export SKNANO_OUTPUT="/data9/Users/$USER/SKNanoOutput"
 echo "@@@@ Working Directory: $SKNANO_HOME"
 
-CONFIG_FILE="$SKNANO_HOME/config/config.$HOSTNAME"
+CONFIG_FILE="$SKNANO_HOME/config/config.$USER"
 # check configuration
 if [ -f "${CONFIG_FILE}" ]; then
     echo -e "\033[32m@@@@ Reading configuration from $CONFIG_FILE\033[0m"
@@ -90,7 +90,7 @@ elif [ $PACKAGE = "mamba" ]; then
     # micromamba shell hook should only be run once per session
     if [[ -z "$__MAMBA_SETUP_DONE" ]]; then
         unalias mamba 2>/dev/null
-        eval "$(micromamba shell hook -s zsh)"
+        eval "$(micromamba shell hook -s bash)"
         export __MAMBA_SETUP_DONE=1
     fi
     micromamba activate Nano
@@ -160,7 +160,7 @@ export LIBTORCH_LIB_DIR=$SKNANO_HOME/external/libtorch/lib
 export LIBTORCH_INSTALL_DIR=$SKNANO_HOME/external/libtorch
 
 # env for correctionlib
-CORRECTIONLIBS=$(conda list | grep "correctionlib")
+CORRECTIONLIBS=$(micromamba list | grep "correctionlib")
 if [ -z "$CORRECTIONLIBS" ]; then
     echo -e "\033[31m@@@@ correctionlib not found in conda environment\033[0m"
     echo -e "\033[31m@@@@ Please install correctionlib in conda environment\033[0m"
@@ -200,7 +200,7 @@ if [[ ! -f "$ROCCOR_PATH/CMakeLists.txt" ]] || [[ ! -f "$ROCCOR_PATH/RoccoR_Link
 fi
 
 # env for onnxruntime
-ONNXRUNTIME=$(conda list | grep "onnxruntime")
+ONNXRUNTIME=$(micromamba list | grep "onnxruntime")
 if [ -z "$ONNXRUNTIME" ]; then
     echo -e "\033[31m@@@@ onnxruntime not found in conda environment\033[0m"
     echo -e "\033[31m@@@@ Please install onnxruntime in conda environment\033[0m"

@@ -332,16 +332,19 @@
         "lumi": 26671.7
     },
     "HLT_Mu50": {
-        "lumi": 26671.7
+        "lumi": 26671.7,
+        "active": true
     },
     "HLT_Mu55": {
         "lumi": 26671.7
     },
     "HLT_CascadeMu100": {
-        "lumi": 26671.7
+        "lumi": 26671.7,
+        "active": true
     },
     "HLT_HighPtTkMu100": {
-        "lumi": 26671.7
+        "lumi": 26671.7,
+        "active": true
     },
     "HLT_DiPFJetAve40": {
         "lumi": 26671.7
@@ -1848,7 +1851,8 @@
         "lumi": 26671.7
     },
     "HLT_Mu50_L1SingleMuShower": {
-        "lumi": 26671.7
+        "lumi": 26671.7,
+        "active": true
     },
     "HLT_ExpressMuons": {
         "lumi": 26671.7

@@ -4,7 +4,158 @@ import json
 import argparse
 import os
 import concurrent.futures
+from array import array
 from tqdm import tqdm
+
+
+# ---------------------------------------------------------------------
+# Analysis efficiency-map binning
+# ---------------------------------------------------------------------
+# BTV recommends a pT granularity along the lines of
+#   [20, 30, 50, 70, 100, 140, 200, 300, 600, 1000] GeV.
+# NIsoMuon only uses AK4 jets with pT > 30 GeV, so the efficiency map starts
+# at 30 GeV.  The last [600,1000] histogram bin is used as the >=600 GeV bin
+# in the correction because the correctionlib node uses flow='clamp'.  Any ROOT
+# pT overflow is explicitly merged into that last bin before the efficiency is
+# calculated.
+TARGET_PT_EDGES = [30.0, 50.0, 70.0, 100.0, 140.0, 200.0, 300.0, 600.0, 1000.0]
+TARGET_ETA_EDGES = [0.0, 2.4]
+
+
+def axis_edges(axis):
+    """Return all visible bin edges of a ROOT TAxis as Python floats."""
+    return [float(axis.GetBinLowEdge(1))] + [
+        float(axis.GetBinUpEdge(i)) for i in range(1, axis.GetNbins() + 1)
+    ]
+
+
+def find_matching_edge(value, edges, tolerance=1.0e-5):
+    for edge in edges:
+        if abs(float(edge) - float(value)) < tolerance:
+            return float(edge)
+    return None
+
+
+def rebin_efficiency_axes(hist, new_name):
+    """
+    Merge the existing TH2 to the NIsoMuon efficiency-map binning.
+
+    Target binning:
+      |eta| : [0.0, 2.4]             (one inclusive analysis bin)
+      pT    : [30, 50, 70, 100, 140, 200, 300, 600, inf) GeV
+
+    correctionlib needs a finite upper edge, so the stored pT edges end at
+    1000 GeV and flow='clamp' is used.  All visible ROOT bins above 1000 GeV
+    and the ROOT pT overflow are explicitly folded into the last [600,1000]
+    bin before the efficiency is formed.  Thus that last efficiency value is
+    the one used for every pT >= 600 GeV.
+
+    Numerator and denominator are rebinned independently and divided only
+    afterwards, so every output efficiency is
+
+        sum(N_pass) / sum(N_total),
+
+    never an average of per-bin efficiencies.
+    """
+    if not hist or not hist.InheritsFrom('TH2'):
+        raise RuntimeError(f'{new_name}: expected a TH2 histogram')
+
+    source_eta_edges = axis_edges(hist.GetXaxis())
+    source_pt_edges = axis_edges(hist.GetYaxis())
+
+    # The requested pT operation must be a pure merge: every finite target
+    # edge must already exist in the source histogram.
+    resolved_pt_edges = []
+    for requested in TARGET_PT_EDGES:
+        matched = find_matching_edge(requested, source_pt_edges)
+        if matched is None:
+            raise RuntimeError(
+                f'{new_name}: requested pT edge {requested:g} GeV is not present '
+                f'in source histogram edges {source_pt_edges}'
+            )
+        resolved_pt_edges.append(matched)
+
+    # Likewise, the one eta bin must align with the source analysis range.
+    eta_low = find_matching_edge(TARGET_ETA_EDGES[0], source_eta_edges)
+    eta_high = find_matching_edge(TARGET_ETA_EDGES[1], source_eta_edges)
+    if eta_low is None or eta_high is None:
+        raise RuntimeError(
+            f'{new_name}: requested |eta| range [0,2.4] is not aligned with '
+            f'source histogram edges {source_eta_edges}'
+        )
+
+    out = ROOT.TH2D(
+        new_name, hist.GetTitle(),
+        1, array('d', [eta_low, eta_high]),
+        len(resolved_pt_edges) - 1, array('d', resolved_pt_edges),
+    )
+    out.SetDirectory(0)
+    out.Sumw2()
+
+    # Sum every visible source eta bin contained in 0 <= |eta| < 2.4.
+    for ix in range(1, hist.GetNbinsX() + 1):
+        x_low = float(hist.GetXaxis().GetBinLowEdge(ix))
+        x_high = float(hist.GetXaxis().GetBinUpEdge(ix))
+
+        if x_high <= eta_low + 1.0e-7:
+            continue
+        if x_low >= eta_high - 1.0e-7:
+            continue
+        if x_low < eta_low - 1.0e-5 or x_high > eta_high + 1.0e-5:
+            raise RuntimeError(
+                f'{new_name}: source eta bin [{x_low},{x_high}] straddles the '
+                f'requested [0,2.4] range; refusing to split bins'
+            )
+
+        target_x = 1
+
+        # Visible pT bins.
+        for iy in range(1, hist.GetNbinsY() + 1):
+            low = float(hist.GetYaxis().GetBinLowEdge(iy))
+            high = float(hist.GetYaxis().GetBinUpEdge(iy))
+            centre = float(hist.GetYaxis().GetBinCenter(iy))
+
+            if high <= resolved_pt_edges[0] + 1.0e-7:
+                continue
+
+            # Any visible source bin starting at/above 1000 GeV contributes to
+            # the final >=600 GeV efficiency bin.
+            if low >= resolved_pt_edges[-1] - 1.0e-7:
+                target_y = out.GetNbinsY()
+            else:
+                target_y = out.GetYaxis().FindFixBin(centre)
+                if target_y < 1:
+                    continue
+                if target_y > out.GetNbinsY():
+                    target_y = out.GetNbinsY()
+
+            old_content = float(out.GetBinContent(target_x, target_y))
+            old_error = float(out.GetBinError(target_x, target_y))
+            add_content = float(hist.GetBinContent(ix, iy))
+            add_error = float(hist.GetBinError(ix, iy))
+            out.SetBinContent(target_x, target_y, old_content + add_content)
+            out.SetBinError(
+                target_x,
+                target_y,
+                (old_error * old_error + add_error * add_error) ** 0.5,
+            )
+
+        # ROOT pT overflow is also part of the final >=600 GeV bin.
+        iy_overflow = hist.GetNbinsY() + 1
+        add_content = float(hist.GetBinContent(ix, iy_overflow))
+        add_error = float(hist.GetBinError(ix, iy_overflow))
+        if add_content != 0.0 or add_error != 0.0:
+            target_y = out.GetNbinsY()
+            old_content = float(out.GetBinContent(target_x, target_y))
+            old_error = float(out.GetBinError(target_x, target_y))
+            out.SetBinContent(target_x, target_y, old_content + add_content)
+            out.SetBinError(
+                target_x,
+                target_y,
+                (old_error * old_error + add_error * add_error) ** 0.5,
+            )
+
+    return out
 
 # ---------------------------------------------------------------------
 # 1. Parse histogram keys from a ROOT file
@@ -100,12 +251,20 @@ def makeTempEffHist(in_file):
             print(f"WARNING: Missing histogram object for {num_info['hist_key']} or {matching_den['hist_key']}")
             continue
 
-        # Create efficiency histogram by cloning numerator and dividing by denominator.
+        # Rebin numerator and denominator BEFORE calculating the efficiency.
+        # Merge |eta| to one inclusive [0,2.4] bin and pT to
+        # [30, 50, 70, 100, 140, 200, 300, 600, inf] GeV.
         eff_name = num_info["hist_key"].replace("num", "eff")
-        eff_hist = num_hist.Clone(eff_name)
-        eff_hist.Divide(den_hist)
+        num_rebinned = rebin_efficiency_axes(num_hist, eff_name + "__num_rebinned")
+        den_rebinned = rebin_efficiency_axes(den_hist, eff_name + "__den_rebinned")
+
+        eff_hist = num_rebinned.Clone(eff_name)
+        eff_hist.SetDirectory(0)
+        eff_hist.Divide(den_rebinned)
         eff_hists.append(eff_hist)
         print(f"Created efficiency histogram: {eff_name}")
+        print(f"  pT edges: {TARGET_PT_EDGES[:-1]} + [inf]")
+        print(f"  |eta| edges: {TARGET_ETA_EDGES}")
 
     # Write all efficiency histograms to a new ROOT file "output.root"
     out_file = ROOT.TFile("output.root", "RECREATE")
@@ -175,6 +334,17 @@ def makingJson(era, tagging_mode):
             except Exception as e:
                 print(f"Error converting histogram: {e}")
 
+    if not filtered:
+        raise RuntimeError(
+            f"No efficiency histograms found for era={era}, tagging={tagging_mode}"
+        )
+
+    if len(conversion_results) != len(filtered):
+        raise RuntimeError(
+            f"Histogram conversion failed for era={era}, tagging={tagging_mode}: "
+            f"{len(conversion_results)}/{len(filtered)} converted successfully."
+        )
+
     # Group the conversion results by tagger → systematic → working_point → flavor.
     grouped = {}
     for tagger, systematic, wp, flavor, data in conversion_results:
@@ -228,6 +398,11 @@ def makingJson(era, tagging_mode):
         corr_entry["data"]["content"].sort(key=lambda x: x["key"])
         corrections.append(corr_entry)
 
+    if not corrections:
+        raise RuntimeError(
+            f"No corrections were built for era={era}, tagging={tagging_mode}"
+        )
+
     main_json = {
         "schema_version": 2,
         "description": "This json file contains the b-tagging efficiency corrections",
@@ -265,7 +440,8 @@ def main():
         in_file.Close()
 
         # Process both tagging modes: "b" and "c"
-        for tagging_mode, json_suffix in zip(["b", "c"], ["btaggingEff.json", "ctaggingEff.json"]):
+        #for tagging_mode, json_suffix in zip(["b", "c"], ["btaggingEff.json", "ctaggingEff.json"]):
+        for tagging_mode, json_suffix in zip(["b"], ["btaggingEff.json"]):
             main_json = makingJson(era, tagging_mode)
             out_path = os.path.join(out_dir, args.out_name_str + json_suffix)
             with open(out_path, "w") as fout:

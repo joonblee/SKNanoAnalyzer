@@ -464,5 +464,264 @@
         "suffix": "TriLep",
         "PD": "tHW",
         "isMC": 1
+    },
+    "Skim_NIsoMuon_QCD_Pt-1000toInf_MuEnriched": {
+        "suffix": "NIsoMuon",
+        "PD": "QCD_Pt-1000toInf_MuEnriched",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_QCD_Pt-800to1000_MuEnriched": {
+        "suffix": "NIsoMuon",
+        "PD": "QCD_Pt-800to1000_MuEnriched",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_QCD_Pt-600to800_MuEnriched": {
+        "suffix": "NIsoMuon",
+        "PD": "QCD_Pt-600to800_MuEnriched",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_QCD_Pt-470to600_MuEnriched": {
+        "suffix": "NIsoMuon",
+        "PD": "QCD_Pt-470to600_MuEnriched",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_QCD_Pt-300to470_MuEnriched": {
+        "suffix": "NIsoMuon",
+        "PD": "QCD_Pt-300to470_MuEnriched",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_QCD_Pt-170to300_MuEnriched": {
+        "suffix": "NIsoMuon",
+        "PD": "QCD_Pt-170to300_MuEnriched",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_QCD_Pt-120to170_MuEnriched": {
+        "suffix": "NIsoMuon",
+        "PD": "QCD_Pt-120to170_MuEnriched",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_QCD_Pt-80to120_MuEnriched": {
+        "suffix": "NIsoMuon",
+        "PD": "QCD_Pt-80to120_MuEnriched",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_QCD_Pt-50to80_MuEnriched": {
+        "suffix": "NIsoMuon",
+        "PD": "QCD_Pt-50to80_MuEnriched",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_QCD_Pt-30to50_MuEnriched": {
+        "suffix": "NIsoMuon",
+        "PD": "QCD_Pt-30to50_MuEnriched",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_QCD_Pt-20to30_MuEnriched": {
+        "suffix": "NIsoMuon",
+        "PD": "QCD_Pt-20to30_MuEnriched",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_QCD_Pt-15to20_MuEnriched": {
+        "suffix": "NIsoMuon",
+        "PD": "QCD_Pt-15to20_MuEnriched",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_TTG_PTG200toInf": {
+        "suffix": "NIsoMuon",
+        "PD": "TTG_PTG200toInf",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_TTG_PTG100to200": {
+        "suffix": "NIsoMuon",
+        "PD": "TTG_PTG100to200",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_TTG_PTG10to100": {
+        "suffix": "NIsoMuon",
+        "PD": "TTG_PTG10to100",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_ST_tch_antitop": {
+        "suffix": "NIsoMuon",
+        "PD": "ST_tch_antitop",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_ST_tch_top": {
+        "suffix": "NIsoMuon",
+        "PD": "ST_tch_top",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_ST_tW_antitop_Lep": {
+        "suffix": "NIsoMuon",
+        "PD": "ST_tW_antitop_Lep",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_ST_tW_top_Lep": {
+        "suffix": "NIsoMuon",
+        "PD": "ST_tW_top_Lep",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_ST_tW_antitop_Semilep": {
+        "suffix": "NIsoMuon",
+        "PD": "ST_tW_antitop_Semilep",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_ST_tW_top_Semilep": {
+        "suffix": "NIsoMuon",
+        "PD": "ST_tW_top_Semilep",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_ST_sch_antitop_Lep": {
+        "suffix": "NIsoMuon",
+        "PD": "ST_sch_antitop_Lep",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_ST_sch_top_Lep": {
+        "suffix": "NIsoMuon",
+        "PD": "ST_sch_top_Lep",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_TTZ_NoFullyHad": {
+        "suffix": "NIsoMuon",
+        "PD": "TTZ_NoFullyHad",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_TTZ_M4to50": {
+        "suffix": "NIsoMuon",
+        "PD": "TTZ_M4to50",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_TTZ_M50": {
+        "suffix": "NIsoMuon",
+        "PD": "TTZ_M50",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_TTWToLNu": {
+        "suffix": "NIsoMuon",
+        "PD": "TTWToLNu",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_TTLL_mtop178p5_powheg": {
+        "suffix": "NIsoMuon",
+        "PD": "TTLL_mtop178p5_powheg",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_TTLL_mtop175p5_powheg": {
+        "suffix": "NIsoMuon",
+        "PD": "TTLL_mtop175p5_powheg",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_TTLL_mtop173p5_powheg": {
+        "suffix": "NIsoMuon",
+        "PD": "TTLL_mtop173p5_powheg",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_TTLL_mtop171p5_powheg": {
+        "suffix": "NIsoMuon",
+        "PD": "TTLL_mtop171p5_powheg",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_TTLL_mtop169p5_powheg": {
+        "suffix": "NIsoMuon",
+        "PD": "TTLL_mtop169p5_powheg",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_TTLL_mtop166p5_powheg": {
+        "suffix": "NIsoMuon",
+        "PD": "TTLL_mtop166p5_powheg",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_TTLL_TuneCP5down_powheg": {
+        "suffix": "NIsoMuon",
+        "PD": "TTLL_TuneCP5down_powheg",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_TTLL_TuneCP5up_powheg": {
+        "suffix": "NIsoMuon",
+        "PD": "TTLL_TuneCP5up_powheg",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_TTLL_TuneCP5CR2_powheg": {
+        "suffix": "NIsoMuon",
+        "PD": "TTLL_TuneCP5CR2_powheg",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_TTLL_TuneCP5CR1_powheg": {
+        "suffix": "NIsoMuon",
+        "PD": "TTLL_TuneCP5CR1_powheg",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_TTLL_TuneCP5_erdOn_powheg": {
+        "suffix": "NIsoMuon",
+        "PD": "TTLL_TuneCP5_erdOn_powheg",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_TTLL_hdamp_up_powheg": {
+        "suffix": "NIsoMuon",
+        "PD": "TTLL_hdamp_up_powheg",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_TTLL_hdamp_down_powheg": {
+        "suffix": "NIsoMuon",
+        "PD": "TTLL_hdamp_down_powheg",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_TTLL_powheg_ext1": {
+        "suffix": "NIsoMuon",
+        "PD": "TTLL_powheg_ext1",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_TTLL_powheg": {
+        "suffix": "NIsoMuon",
+        "PD": "TTLL_powheg",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_TTJJ_powheg": {
+        "suffix": "NIsoMuon",
+        "PD": "TTJJ_powheg",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_TTLJ_powheg": {
+        "suffix": "NIsoMuon",
+        "PD": "TTLJ_powheg",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_DYJets10to50_MG": {
+        "suffix": "NIsoMuon",
+        "PD": "DYJets10to50_MG",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_DYJets10to50": {
+        "suffix": "NIsoMuon",
+        "PD": "DYJets10to50",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_DYJets_MG": {
+        "suffix": "NIsoMuon",
+        "PD": "DYJets_MG",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_DYJets": {
+        "suffix": "NIsoMuon",
+        "PD": "DYJets",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_WJets_MG": {
+        "suffix": "NIsoMuon",
+        "PD": "WJets_MG",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_WJets": {
+        "suffix": "NIsoMuon",
+        "PD": "WJets",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Muon": {
+        "suffix": "NIsoMuon",
+        "PD": "Muon",
+        "isMC": 0,
+        "periods": [
+            "D",
+            "C"
+        ]
     }
 }

@@ -1,0 +1,11 @@
+WJets_MG
+TTLJ_powheg
+TTLL_powheg
+TTWToLNu
+TTZToLLNuNu
+SingleTop_sch_Lep
+SingleTop_tch_antitop_Incl
+SingleTop_tch_top_Incl
+SingleTop_tW_antitop_NoFullyHad
+SingleTop_tW_top_NoFullyHad
+TTG 
