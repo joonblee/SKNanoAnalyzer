@@ -11,6 +11,7 @@ RUN_QCDonly=false   # Available only with 'RUN_MC=true'
 RUN_SIG=false
 
 UseSkim=true
+UseRun3SignalSkim=false  # false: use raw Sample/ForSNU metadata for Run-3 signals
 # NOTE: TriggerEfficiency requires TrigObj branches in the input.
 #       If UseSkim=true, the Skim_NIsoMuon output must retain TrigObj_* branches.
 
@@ -207,7 +208,14 @@ for trig in "${TriggerSets[@]}"; do
       fi
 
       if $RUN_SIG && ! is_efficiency_mode "$flag"; then
-        if $UseSkim; then
+        if [[ "$era" == "2022" || "$era" == "2022EE" || \
+              "$era" == "2023" || "$era" == "2023BPix" ]]; then
+          if $UseRun3SignalSkim; then
+            sig_input=$(list_to_input "$signalset" "${skim}_")
+          else
+            sig_input=$(list_to_input "$signalset" "")
+          fi
+        elif $UseSkim; then
           sig_input=$(list_to_input "$signalset" "${skim}_")
         else
           sig_input=$(list_to_input "$signalset" "")
@@ -246,4 +254,3 @@ for trig in "${TriggerSets[@]}"; do
     done
   done
 done
-
