@@ -1191,10 +1191,38 @@ void NIsoMuon::RunTriggerEfficiency(
 
 float NIsoMuon::ReadTheoryWeight(const TString &kind, int index) const {
     if (kind == "PDFScale") {
-        if (index < 0 || index >= nLHEScaleWeight) {
+        // NanoAOD stores the eight non-central scale weights in
+        // LHEScaleWeight[0..7]; the central (muR,muF)=(1,1) point is omitted.
+        //
+        // Expose PDFScale0..8 in the Run-2 SKFlat ordering expected by the
+        // downstream limit workflow:
+        //   0: (1,1)
+        //   1: (1,2)
+        //   2: (1,0.5)
+        //   3: (2,1)
+        //   4: (2,2)
+        //   5: (2,0.5)
+        //   6: (0.5,1)
+        //   7: (0.5,2)
+        //   8: (0.5,0.5)
+        if (index == 0) return 1.0f;
+
+        if (nLHEScaleWeight < 8) {
             return std::numeric_limits<float>::quiet_NaN();
         }
-        return LHEScaleWeight[index];
+
+        switch (index) {
+            case 1: return LHEScaleWeight[4];
+            case 2: return LHEScaleWeight[3];
+            case 3: return LHEScaleWeight[6];
+            case 4: return LHEScaleWeight[7];
+            case 5: return LHEScaleWeight[5];
+            case 6: return LHEScaleWeight[1];
+            case 7: return LHEScaleWeight[2];
+            case 8: return LHEScaleWeight[0];
+            default:
+                return std::numeric_limits<float>::quiet_NaN();
+        }
     }
 
     if (kind == "PDFError") {
