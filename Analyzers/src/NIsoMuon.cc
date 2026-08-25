@@ -301,6 +301,12 @@ void NIsoMuon::initializeAnalyzer() {
     runSyst = HasFlag("RunSyst");
     runXSecSyst = HasFlag("RunXSecSyst");
 
+    if (IsDATA && (runSyst || runXSecSyst)) {
+        std::cerr << "[NIsoMuon::initializeAnalyzer] RunSyst and RunXSecSyst are "
+                  << "MC-only modes; refusing to run on data." << std::endl;
+        std::exit(EXIT_FAILURE);
+    }
+
     if (analysisMode != AnalysisMode::NIsoDimuon &&
         (runSyst || runXSecSyst)) {
         std::cerr << "[NIsoMuon::initializeAnalyzer] Efficiency modes are central-only. "
@@ -780,10 +786,15 @@ void NIsoMuon::RunVariation(
         if (category == Category::LightJet && hasLooseBJet) continue;
 
         for (const auto sign : signs) {
+            if ((runSyst || runXSecSyst) &&
+                (category != Category::BJet || sign != DileptonSign::OS)) {
+                continue;
+            }
             if (category == Category::LightJet && sign == DileptonSign::SS) {
                 continue;
             }
-            if (MCSample.Contains("Zp") && sign == DileptonSign::SS) {
+            if (MCSample.Contains("Zp") &&
+                (category == Category::LightJet || sign == DileptonSign::SS)) {
                 continue;
             }
 

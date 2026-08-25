@@ -743,5 +743,540 @@
             "C_v2",
             "C_v1"
         ]
+    },
+    "Skim_NIsoMuon_Zp_M-70_Pt-400to9999_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-70_Pt-400to9999_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-70_Pt-300to400_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-70_Pt-300to400_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-70_Pt-270to300_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-70_Pt-270to300_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-70_Pt-250to270_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-70_Pt-250to270_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-70_Pt-230to250_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-70_Pt-230to250_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-70_Pt-220to230_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-70_Pt-220to230_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-70_Pt-210to220_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-70_Pt-210to220_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-70_Pt-200to210_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-70_Pt-200to210_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-65_Pt-400to9999_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-65_Pt-400to9999_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-65_Pt-300to400_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-65_Pt-300to400_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-65_Pt-270to300_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-65_Pt-270to300_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-65_Pt-250to270_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-65_Pt-250to270_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-65_Pt-230to250_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-65_Pt-230to250_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-65_Pt-220to230_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-65_Pt-220to230_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-65_Pt-210to220_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-65_Pt-210to220_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-65_Pt-200to210_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-65_Pt-200to210_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-60_Pt-300to9999_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-60_Pt-300to9999_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-60_Pt-240to300_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-60_Pt-240to300_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-60_Pt-200to240_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-60_Pt-200to240_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-60_Pt-180to200_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-60_Pt-180to200_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-60_Pt-170to180_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-60_Pt-170to180_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-60_Pt-160to170_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-60_Pt-160to170_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-60_Pt-150to160_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-60_Pt-150to160_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-55_Pt-300to9999_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-55_Pt-300to9999_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-55_Pt-240to300_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-55_Pt-240to300_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-55_Pt-200to240_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-55_Pt-200to240_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-55_Pt-180to200_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-55_Pt-180to200_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-55_Pt-170to180_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-55_Pt-170to180_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-55_Pt-160to170_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-55_Pt-160to170_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-55_Pt-150to160_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-55_Pt-150to160_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-50_Pt-300to9999_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-50_Pt-300to9999_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-50_Pt-240to300_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-50_Pt-240to300_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-50_Pt-200to240_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-50_Pt-200to240_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-50_Pt-180to200_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-50_Pt-180to200_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-50_Pt-170to180_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-50_Pt-170to180_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-50_Pt-160to170_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-50_Pt-160to170_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-50_Pt-150to160_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-50_Pt-150to160_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-50_Pt-145to150_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-50_Pt-145to150_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-50_Pt-140to145_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-50_Pt-140to145_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-45_Pt-300to9999_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-45_Pt-300to9999_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-45_Pt-240to300_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-45_Pt-240to300_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-45_Pt-200to240_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-45_Pt-200to240_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-45_Pt-180to200_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-45_Pt-180to200_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-45_Pt-170to180_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-45_Pt-170to180_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-45_Pt-160to170_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-45_Pt-160to170_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-45_Pt-150to160_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-45_Pt-150to160_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-45_Pt-145to150_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-45_Pt-145to150_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-45_Pt-140to145_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-45_Pt-140to145_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-40_Pt-300to9999_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-40_Pt-300to9999_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-40_Pt-240to300_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-40_Pt-240to300_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-40_Pt-200to240_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-40_Pt-200to240_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-40_Pt-180to200_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-40_Pt-180to200_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-40_Pt-170to180_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-40_Pt-170to180_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-40_Pt-160to170_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-40_Pt-160to170_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-40_Pt-150to160_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-40_Pt-150to160_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-40_Pt-145to150_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-40_Pt-145to150_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-40_Pt-140to145_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-40_Pt-140to145_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-40_Pt-135to140_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-40_Pt-135to140_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-40_Pt-130to135_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-40_Pt-130to135_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-35_Pt-200to9999_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-35_Pt-200to9999_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-35_Pt-150to200_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-35_Pt-150to200_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-35_Pt-130to150_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-35_Pt-130to150_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-35_Pt-120to130_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-35_Pt-120to130_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-35_Pt-110to120_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-35_Pt-110to120_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-35_Pt-100to110_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-35_Pt-100to110_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-30_Pt-200to9999_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-30_Pt-200to9999_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-30_Pt-150to200_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-30_Pt-150to200_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-30_Pt-130to150_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-30_Pt-130to150_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-30_Pt-120to130_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-30_Pt-120to130_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-30_Pt-110to120_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-30_Pt-110to120_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-30_Pt-100to110_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-30_Pt-100to110_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-25_Pt-200to9999_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-25_Pt-200to9999_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-25_Pt-150to200_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-25_Pt-150to200_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-25_Pt-130to150_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-25_Pt-130to150_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-25_Pt-120to130_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-25_Pt-120to130_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-25_Pt-110to120_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-25_Pt-110to120_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-25_Pt-100to110_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-25_Pt-100to110_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-25_Pt-95to100_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-25_Pt-95to100_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-25_Pt-90to95_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-25_Pt-90to95_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-20_Pt-200to9999_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-20_Pt-200to9999_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-20_Pt-150to200_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-20_Pt-150to200_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-20_Pt-130to150_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-20_Pt-130to150_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-20_Pt-120to130_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-20_Pt-120to130_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-20_Pt-110to120_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-20_Pt-110to120_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-20_Pt-100to110_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-20_Pt-100to110_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-20_Pt-95to100_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-20_Pt-95to100_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-20_Pt-90to95_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-20_Pt-90to95_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-15_Pt-200to9999_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-15_Pt-200to9999_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-15_Pt-150to200_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-15_Pt-150to200_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-15_Pt-130to150_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-15_Pt-130to150_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-15_Pt-120to130_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-15_Pt-120to130_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-15_Pt-110to120_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-15_Pt-110to120_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-15_Pt-100to110_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-15_Pt-100to110_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-15_Pt-95to100_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-15_Pt-95to100_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-15_Pt-90to95_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-15_Pt-90to95_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-15_Pt-85to90_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-15_Pt-85to90_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-15_Pt-80to85_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-15_Pt-80to85_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-12_Pt-150to9999_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-12_Pt-150to9999_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-12_Pt-120to150_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-12_Pt-120to150_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-12_Pt-100to120_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-12_Pt-100to120_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-12_Pt-90to100_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-12_Pt-90to100_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-12_Pt-85to90_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-12_Pt-85to90_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-12_Pt-80to85_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-12_Pt-80to85_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-12_Pt-75to80_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-12_Pt-75to80_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-12_Pt-70to75_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-12_Pt-70to75_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-12_Pt-67to70_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-12_Pt-67to70_hw7",
+        "isMC": 1
+    },
+    "Skim_NIsoMuon_Zp_M-12_Pt-65to67_hw7": {
+        "suffix": "NIsoMuon",
+        "PD": "Zp_M-12_Pt-65to67_hw7",
+        "isMC": 1
     }
 }

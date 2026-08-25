@@ -56,8 +56,8 @@ mcset_Run3="SampleLists/Run3mc.txt"
 qcdset_Run2="SampleLists/Run2qcd.txt"
 qcdset_Run3="SampleLists/Run3qcd.txt"
 
-xsecset_Run2="SampleLists/Run2XSecSyst.txt"
-xsecset_Run3="SampleLists/Run3XSecSyst.txt"
+systset_Run2="SampleLists/Run2Syst.txt"
+systset_Run3="SampleLists/Run3Syst.txt"
 
 effset_Run3="SampleLists/Run3eff.txt"
 
@@ -105,6 +105,11 @@ is_efficiency_mode() {
   [[ "$flag" == "MuonIDEfficiency" || "$flag" == "TriggerEfficiency" ]]
 }
 
+is_systematic_mode() {
+  local flag="$1"
+  [[ "$flag" == "RunSyst" || "$flag" == "RunXSecSyst" ]]
+}
+
 echo ""
 echo "// ------------------------------------------------------ //"
 echo "// ----------------- Run SKNanoAnalyzer ----------------- //"
@@ -123,19 +128,19 @@ for trig in "${TriggerSets[@]}"; do
       signalset="$signalset_Run2"
       mcset="$mcset_Run2"
       qcdset="$qcdset_Run2"
-      xsecset="$xsecset_Run2"
+      systset="$systset_Run2"
     elif [[ "$era" == "2022" || "$era" == "2022EE" ]]; then
       dataset="Muon"
       signalset="$signalset_Run3"
       mcset="$mcset_Run3"
       qcdset="$qcdset_Run3"
-      xsecset="$xsecset_Run3"
+      systset="$systset_Run3"
     elif [[ "$era" == "2023" || "$era" == "2023BPix" ]]; then
       dataset="Muon0,Muon1"
       signalset="$signalset_Run3"
       mcset="$mcset_Run3"
       qcdset="$qcdset_Run3"
-      xsecset="$xsecset_Run3"
+      systset="$systset_Run3"
     fi
 
     for flag in "${flags[@]}"; do
@@ -169,8 +174,8 @@ for trig in "${TriggerSets[@]}"; do
         mcset_this="$qcdset"
       fi
       
-      if [[ "$flag" == "RunXSecSyst" ]]; then
-        mcset_this="$xsecset"
+      if is_systematic_mode "$flag"; then
+        mcset_this="$systset"
       fi
       
       if is_efficiency_mode "$flag"; then
@@ -191,7 +196,7 @@ for trig in "${TriggerSets[@]}"; do
         cmd_common+=("${extra_args[@]}")
       fi
 
-      if $RUN_DT; then
+      if $RUN_DT && ! is_systematic_mode "$flag"; then
         if $UseSkim; then
           data_input=$(prefix_input "$dataset" "${skim}_")
         else
@@ -207,7 +212,7 @@ for trig in "${TriggerSets[@]}"; do
         fi
       fi
 
-      if $RUN_SIG && ! is_efficiency_mode "$flag"; then
+      if $RUN_SIG && ! is_efficiency_mode "$flag" && [[ "$flag" != "RunXSecSyst" ]]; then
         if [[ "$era" == "2022" || "$era" == "2022EE" || \
               "$era" == "2023" || "$era" == "2023BPix" ]]; then
           if $UseRun3SignalSkim; then
@@ -222,7 +227,7 @@ for trig in "${TriggerSets[@]}"; do
         fi
       fi
 
-      if $RUN_DT && [[ "$flag" != "RunXSecSyst" ]]; then
+      if $RUN_DT && ! is_systematic_mode "$flag"; then
         "${cmd_common[@]}" \
           -i "$data_input" \
           &> "log/submit_${era}_${dataset//,/_}_${trig}${flag:+__${flag}}.log"
@@ -240,7 +245,7 @@ for trig in "${TriggerSets[@]}"; do
         echo "[SKNano.py] Do not make MC samples"
       fi
 
-      if $RUN_SIG && ! is_efficiency_mode "$flag"; then
+      if $RUN_SIG && ! is_efficiency_mode "$flag" && [[ "$flag" != "RunXSecSyst" ]]; then
         "${cmd_common[@]}" \
           -i "$sig_input" \
           &> "log/submit_${era}_sig_${trig}${flag:+__${flag}}.log"

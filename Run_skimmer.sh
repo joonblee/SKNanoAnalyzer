@@ -5,12 +5,12 @@
 ##############
 
 #Eras=(2016preVFP 2016postVFP 2017 2018 2022 2022EE 2023 2023BPix)
-#Eras=(2022 2022EE 2023 2023BPix)
-Eras=(2016preVFP 2016postVFP 2017 2018)
-Eras=(2016preVFP 2016postVFP 2017)
+Eras=(2022 2022EE 2023 2023BPix)
+Eras=(2022EE 2023 2023BPix)
 
-Sample_Run2="SampleLists/Run2NanoV9/Run2mc_all.txt"
-Sample_Run3="SampleLists/Run3NanoV13/Run3mc.txt"
+Sample_Run2="SampleLists/Run2mc_all.txt"
+Sample_Run3="SampleLists/Run3mc.txt"
+Sample_Run3="SampleLists/Run3signal.txt"
 
 nBatch=-1
 
@@ -49,8 +49,8 @@ do
     -n "$nBatch" \
     -e "$era" \
     --nmax 1000 \
-    --skimming_mode \
-    &> "submit_skim_${era}.log" 
+    --skimming_mode #\
+    #&> "submit_skim_${era}.log" 
 
   sleep 2
 done
