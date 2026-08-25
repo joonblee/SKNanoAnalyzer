@@ -8,10 +8,9 @@
 RUN_DT=true
 RUN_MC=true
 RUN_QCDonly=false   # Available only with 'RUN_MC=true'
-RUN_SIG=false
+RUN_SIG=true
 
 UseSkim=true
-UseRun3SignalSkim=false  # false: use raw Sample/ForSNU metadata for Run-3 signals
 # NOTE: TriggerEfficiency requires TrigObj branches in the input.
 #       If UseSkim=true, the Skim_NIsoMuon output must retain TrigObj_* branches.
 
@@ -40,6 +39,7 @@ UseRun3SignalSkim=false  # false: use raw Sample/ForSNU metadata for Run-3 signa
 # Current selection:
 flags=("" "RunSyst" "RunXSecSyst" "MuonIDEfficiency" "TriggerEfficiency")
 flags=("" "RunSyst" "RunXSecSyst")
+flags=("")
 
 # analysis setups
 analysis="NIsoMuon"
@@ -213,14 +213,7 @@ for trig in "${TriggerSets[@]}"; do
       fi
 
       if $RUN_SIG && ! is_efficiency_mode "$flag" && [[ "$flag" != "RunXSecSyst" ]]; then
-        if [[ "$era" == "2022" || "$era" == "2022EE" || \
-              "$era" == "2023" || "$era" == "2023BPix" ]]; then
-          if $UseRun3SignalSkim; then
-            sig_input=$(list_to_input "$signalset" "${skim}_")
-          else
-            sig_input=$(list_to_input "$signalset" "")
-          fi
-        elif $UseSkim; then
+        if $UseSkim; then
           sig_input=$(list_to_input "$signalset" "${skim}_")
         else
           sig_input=$(list_to_input "$signalset" "")
@@ -246,7 +239,9 @@ for trig in "${TriggerSets[@]}"; do
       fi
 
       if $RUN_SIG && ! is_efficiency_mode "$flag" && [[ "$flag" != "RunXSecSyst" ]]; then
-        "${cmd_common[@]}" \
+        cmd_signal=("${cmd_common[@]}")
+        cmd_signal[6]=1
+        "${cmd_signal[@]}" \
           -i "$sig_input" \
           &> "log/submit_${era}_sig_${trig}${flag:+__${flag}}.log"
         echo "[SKNano.py] Run analyzer for signals: $signalset trigger: $trig era: $era"
