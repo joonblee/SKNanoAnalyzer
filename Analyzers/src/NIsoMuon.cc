@@ -1190,73 +1190,133 @@ void NIsoMuon::RunTriggerEfficiency(
 }
 
 float NIsoMuon::ReadTheoryWeight(const TString &kind, int index) const {
-    if (kind == "PDFScale") {
-        // NanoAOD stores the eight non-central scale weights in
-        // LHEScaleWeight[0..7]; the central (muR,muF)=(1,1) point is omitted.
-        //
-        // Expose PDFScale0..8 in the Run-2 SKFlat ordering expected by the
-        // downstream limit workflow:
-        //   0: (1,1)
-        //   1: (1,2)
-        //   2: (1,0.5)
-        //   3: (2,1)
-        //   4: (2,2)
-        //   5: (2,0.5)
-        //   6: (0.5,1)
-        //   7: (0.5,2)
-        //   8: (0.5,0.5)
-        if (index == 0) return 1.0f;
 
-        if (nLHEScaleWeight < 8) {
+    // -------------------------------------------------------------------------
+    // Renormalisation/factorisation scale variations
+    //
+    // PDFScale0 is defined as the nominal point.
+    // If this sample does not provide LHE scale weights, use the nominal
+    // event weight (factor = 1) for every requested scale variation.
+    // -------------------------------------------------------------------------
+    if (kind == "PDFScale") {
+
+        // Invalid request: this is a coding error, not a missing sample weight.
+        if (index < 0 || index > 8) {
             return std::numeric_limits<float>::quiet_NaN();
         }
 
+        // Central member.
+        if (index == 0) {
+            return 1.0f;
+        }
+
+        // This sample has no usable scale-weight set.
+        // Keep its nominal contribution in every systematic template.
+        if (nLHEScaleWeight < 8) {
+            return 1.0f;
+        }
+
+        int sourceIndex = -1;
+
         switch (index) {
-            case 1: return LHEScaleWeight[4];
-            case 2: return LHEScaleWeight[3];
-            case 3: return LHEScaleWeight[6];
-            case 4: return LHEScaleWeight[7];
-            case 5: return LHEScaleWeight[5];
-            case 6: return LHEScaleWeight[1];
-            case 7: return LHEScaleWeight[2];
-            case 8: return LHEScaleWeight[0];
+            case 1: sourceIndex = 4; break;
+            case 2: sourceIndex = 3; break;
+            case 3: sourceIndex = 6; break;
+            case 4: sourceIndex = 7; break;
+            case 5: sourceIndex = 5; break;
+            case 6: sourceIndex = 1; break;
+            case 7: sourceIndex = 2; break;
+            case 8: sourceIndex = 0; break;
             default:
                 return std::numeric_limits<float>::quiet_NaN();
         }
+
+        const float weight = LHEScaleWeight[sourceIndex];
+
+        // A malformed/non-finite stored weight should also not remove the
+        // event from the systematic template.
+        return std::isfinite(weight) ? weight : 1.0f;
     }
 
+
+    // -------------------------------------------------------------------------
+    // PDF error members
+    //
+    // Always construct PDFError0...99.  If a requested member is unavailable
+    // in this sample, use factor = 1 so that this sample contributes its
+    // nominal yield to that systematic template.
+    // -------------------------------------------------------------------------
     if (kind == "PDFError") {
+
+        // Only PDFError0...99 are valid requests.
+        if (index < 0 || index >= 100) {
+            return std::numeric_limits<float>::quiet_NaN();
+        }
+
         int firstErrorIndex = 0;
         int availableErrors = nLHEPdfWeight;
+
         if (nLHEPdfWeight >= 103) {
             firstErrorIndex = 1;
             availableErrors = nLHEPdfWeight - 3;
-        } else if (nLHEPdfWeight >= 102) {
+        }
+        else if (nLHEPdfWeight >= 102) {
             firstErrorIndex = 0;
             availableErrors = nLHEPdfWeight - 2;
         }
 
-        if (index < 0 || index >= std::min(100, availableErrors)) {
-            return std::numeric_limits<float>::quiet_NaN();
+        // Requested PDF member is not stored in this sample.
+        if (index >= availableErrors) {
+            return 1.0f;
         }
-        return LHEPdfWeight[firstErrorIndex + index];
+
+        const int sourceIndex = firstErrorIndex + index;
+
+        if (sourceIndex < 0 || sourceIndex >= nLHEPdfWeight) {
+            return 1.0f;
+        }
+
+        const float weight = LHEPdfWeight[sourceIndex];
+
+        return std::isfinite(weight) ? weight : 1.0f;
     }
 
+
+    // -------------------------------------------------------------------------
+    // alpha_s variations
+    //
+    // Always construct PDFAlphaS0 and PDFAlphaS1.  If this sample does not
+    // provide the dedicated alpha_s weights, use the nominal contribution.
+    // -------------------------------------------------------------------------
     if (kind == "PDFAlphaS") {
+
+        // Only the two requested alpha_s members are valid.
+        if (index < 0 || index > 1) {
+            return std::numeric_limits<float>::quiet_NaN();
+        }
+
         int alphaSIndex = -1;
+
         if (nLHEPdfWeight >= 103) {
             alphaSIndex = 101 + index;
-        } else if (nLHEPdfWeight >= 102) {
+        }
+        else if (nLHEPdfWeight >= 102) {
             alphaSIndex = 100 + index;
         }
 
-        if (index < 0 || index > 1 ||
-            alphaSIndex < 0 || alphaSIndex >= nLHEPdfWeight) {
-            return std::numeric_limits<float>::quiet_NaN();
+        // No dedicated alpha_s weights in this sample:
+        // keep the nominal contribution.
+        if (alphaSIndex < 0 || alphaSIndex >= nLHEPdfWeight) {
+            return 1.0f;
         }
-        return LHEPdfWeight[alphaSIndex];
+
+        const float weight = LHEPdfWeight[alphaSIndex];
+
+        return std::isfinite(weight) ? weight : 1.0f;
     }
 
+
+    // Unknown theory-weight type = coding error.
     return std::numeric_limits<float>::quiet_NaN();
 }
 
