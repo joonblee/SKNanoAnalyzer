@@ -820,7 +820,7 @@ void NIsoMuon::RunVariation(
             if (!(dimuonMass > kHistogramMassCut)) continue;
 
             const bool outsideUpsilon =
-                dimuonMass < 9.0f || dimuonMass > 10.4f;
+                dimuonMass < 9.0f || dimuonMass > 11.0f;
             if (!(sign == DileptonSign::SS ||
                   category == Category::LightJet ||
                   outsideUpsilon)) {
@@ -854,7 +854,7 @@ void NIsoMuon::RunVariation(
             // Fill hisgrams //
             FillHist(histogram, dimuonMass, weight, 7500, 0.0, 150.0);
   					
-            if (!(10.4 < dimuonMass && dimuonMass < 80.)) continue;
+            if (!(11. < dimuonMass && dimuonMass < 80.)) continue;
 
             for (unsigned int i = 0; i < selectedMuons.size(); ++i) {
                 const TString index = TString::Itoa(i, 10);
