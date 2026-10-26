@@ -255,10 +255,6 @@ for trig in "${TriggerSets[@]}"; do
 
       mcset_this="$mcset"
       
-      if $RUN_QCDonly; then
-        mcset_this="$qcdset"
-      fi
-      
       if is_systematic_mode "$flag"; then
         mcset_this="$systset"
       fi

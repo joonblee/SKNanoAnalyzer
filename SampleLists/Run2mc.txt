@@ -1,6 +1,8 @@
 WJets_MG
 DYJets
 DYJets10to50
+DYJets_MG
+DYJets10to50_MG
 TTJJ_powheg
 TTLJ_powheg
 TTLL_powheg

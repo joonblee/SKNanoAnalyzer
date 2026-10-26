@@ -146,6 +146,7 @@ void NIsoMuon::ConfigureTriggers() {
             addTo("HLT_Mu50", highPtEfficiencyTriggers);
             addTo("HLT_CascadeMu100", highPtEfficiencyTriggers);
             addTo("HLT_HighPtTkMu100", highPtEfficiencyTriggers);
+            addTo("HLT_Mu50_L1SingleMuShower", highPtEfficiencyTriggers);
         }
         if (analysisMode == AnalysisMode::TriggerEfficiency) {
             addTo("HLT_IsoMu24", isolatedMuonTriggers);
@@ -1124,7 +1125,8 @@ void NIsoMuon::RunTriggerEfficiency(
     std::size_t tagIndex = muons.size();
     for (std::size_t index = 0; index < muons.size(); ++index) {
         const Muon &tagMuon = muons[index];
-        if (!(tagMuon.Pt() > IsolatedTagPtThreshold())) continue;
+        //if (!(tagMuon.Pt() > IsolatedTagPtThreshold())) continue;
+        if (!(tagMuon.Pt() > 30.)) continue;
         if (!tagMuon.PassID(Muon::MuonID::POG_TIGHT)) continue;
         if (!tagMuon.PassID(Muon::MuonID::POG_PFISO_TIGHT)) continue;
         if (!MatchMuonToIsolatedTriggerObject(tagMuon, triggerObjects)) continue;
