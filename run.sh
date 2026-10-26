@@ -1,4 +1,6 @@
 #!/bin/bash
+# Source-safe entry point: all settings and exits stay in this subshell.
+(
 
 ##############
 ### setups ###
@@ -13,39 +15,6 @@ RUN_SIG=true
 UseSkim=true
 # NOTE: TriggerEfficiency requires TrigObj branches in the input.
 #       If UseSkim=true, the Skim_NIsoMuon output must retain TrigObj_* branches.
-
-# -----------------------------------------------------------------------------
-# NIsoMuon analysis modes / systematic modes
-#
-# Each entry is run INDEPENDENTLY.  The entries are NOT combined with each other.
-#
-#   ""                    : nominal NIsoDimuon analysis
-#   "RunSyst"             : NIsoDimuon experimental-systematic variations
-#   "RunXSecSyst"         : NIsoDimuon generator PDF/scale/alpha_s variations
-#   "MuonIDEfficiency"    : muon-ID tag-and-probe mode (central only)
-#   "TriggerEfficiency"   : HighPtMuon-trigger tag-and-probe mode (central only)
-#
-# Examples:
-#
-#   # nominal + both systematic productions
-#   flags=("" "RunSyst" "RunXSecSyst")
-#
-#   # only the two efficiency measurements
-#   flags=("MuonIDEfficiency" "TriggerEfficiency")
-#
-#   # everything
-#   flags=("" "RunSyst" "RunXSecSyst" "MuonIDEfficiency" "TriggerEfficiency")
-#
-# Current selection:
-flags=("" "RunSyst" "RunXSecSyst" "MuonIDEfficiency" "TriggerEfficiency")
-flags=("" "RunSyst" "RunXSecSyst")
-flags=("")
-
-# Optional ttbar-only study: TOP_PT_REWEIGHT=true bash run.sh
-# Output: NIsoMuon/TopPtReweight/[RunSyst|RunXSecSyst/]<era>/
-if [[ "${TOP_PT_REWEIGHT:-false}" == "true" ]]; then
-  flags=("TopPtReweight" "TopPtReweight,RunSyst" "TopPtReweight,RunXSecSyst")
-fi
 
 # analysis setups
 analysis="NIsoMuon"
@@ -67,14 +36,105 @@ systset_Run3="SampleLists/Run3Syst.txt"
 
 effset_Run3="SampleLists/Run3eff.txt"
 
-Eras=(2016preVFP 2016postVFP 2017 2018 2022 2022EE 2023 2023BPix)
-Eras=(2022 2022EE 2023 2023BPix)
 
 nBatch=50
 batchname=""       # e.g. "NIsoMuon"
 extra_args=()      # e.g. ("--no_exec") or ("--memory" "4000")
 
-mkdir -p log
+
+# CLI options are local to the subshell, including when this file is sourced.
+era_selection="Run3"
+flag_selection="nominal"
+top_pt_reweight="${TOP_PT_REWEIGHT:-false}"
+dry_run=false
+print_usage() {
+  cat <<'HELP'
+Usage: source run.sh [options]     (bash run.sh also works)
+  --era, --eras LIST   Run3 (default), ERA, or comma-separated eras/runs
+  --flags LIST        nominal (default), RunSyst, RunXSecSyst, or all
+                      Comma-separated modes are submitted independently.
+                      MuonIDEfficiency and TriggerEfficiency are also accepted.
+  --top-pt-reweight [true|false]   Optional ttbar-only study (default: false)
+  --no-top-pt-reweight            Explicitly disable the study
+  --dry-run                      Print commands without building/submitting
+  -h, --help
+Examples:
+  source run.sh
+  source run.sh --era 2022EE --flags nominal,RunSyst
+  source run.sh --era Run3 --flags all --top-pt-reweight
+  TOP_PT_REWEIGHT=true bash run.sh --flags all
+HELP
+}
+while (( $# )); do
+  case "$1" in
+    --era|--eras|--flags)
+      if (( $# < 2 )) || [[ "$2" == --* ]]; then echo "[ERROR] $1 requires a value" >&2; exit 2; fi
+      if [[ "$1" == "--flags" ]]; then flag_selection="$2"; else era_selection="$2"; fi
+      shift 2 ;;
+    --top-pt-reweight)
+      top_pt_reweight=true
+      if [[ "${2:-}" == "true" || "${2:-}" == "false" ]]; then top_pt_reweight="$2"; shift; fi
+      shift ;;
+    --no-top-pt-reweight) top_pt_reweight=false; shift ;;
+    --dry-run) dry_run=true; shift ;;
+    -h|--help) print_usage; exit 0 ;;
+    *) echo "[ERROR] Unknown option: $1" >&2; print_usage; exit 2 ;;
+  esac
+done
+case "$top_pt_reweight" in true|false) ;; *) echo "[ERROR] TOP_PT_REWEIGHT must be true or false" >&2; exit 2 ;; esac
+
+Eras=()
+IFS=',' read -r -a selections <<< "$era_selection"
+for selection in "${selections[@]}"; do
+  case "$selection" in
+    Run2|run2) expanded=(2016preVFP 2016postVFP 2017 2018) ;;
+    Run3|run3) expanded=(2022 2022EE 2023 2023BPix) ;;
+    Run2+3|run2+3|all) expanded=(2016preVFP 2016postVFP 2017 2018 2022 2022EE 2023 2023BPix) ;;
+    2016preVFP|2016postVFP|2017|2018|2022|2022EE|2023|2023BPix) expanded=("$selection") ;;
+    *) echo "[ERROR] Unknown era: $selection" >&2; exit 2 ;;
+  esac
+  for era in "${expanded[@]}"; do
+    if [[ " ${Eras[*]} " != *" $era "* ]]; then Eras+=("$era"); fi
+  done
+done
+flags=()
+IFS=',' read -r -a selections <<< "$flag_selection"
+for selection in "${selections[@]}"; do
+  case "$selection" in
+    nominal|Nominal) expanded=("") ;;
+    all) expanded=("" "RunSyst" "RunXSecSyst") ;;
+    RunSyst|RunXSecSyst|MuonIDEfficiency|TriggerEfficiency) expanded=("$selection") ;;
+    *) echo "[ERROR] Unknown flag: $selection" >&2; exit 2 ;;
+  esac
+  for flag in "${expanded[@]}"; do
+    if $top_pt_reweight; then
+      case "$flag" in
+        ""|RunSyst|RunXSecSyst) flag="TopPtReweight${flag:+,$flag}" ;;
+        *) echo "[ERROR] TopPtReweight supports nominal, RunSyst and RunXSecSyst only" >&2; exit 2 ;;
+      esac
+    fi
+    duplicate=false
+    for existing in "${flags[@]}"; do [[ "$existing" == "$flag" ]] && duplicate=true; done
+    $duplicate || flags+=("$flag")
+  done
+done
+if (( ${#Eras[@]} == 0 || ${#flags[@]} == 0 )); then echo "[ERROR] Empty era/mode selection" >&2; exit 2; fi
+
+submit_job() {
+  local logfile="$1"
+  shift
+  if $dry_run; then
+    printf '[dry-run] '
+    printf '%q ' "$@"
+    printf '\n'
+  else
+    "$@" &> "$logfile"
+  fi
+}
+
+if ! $dry_run; then
+  mkdir -p log
+fi
 
 list_to_input() {
   local listfile="$1"
@@ -164,8 +224,8 @@ for trig in "${TriggerSets[@]}"; do
             "$mcset" | paste -sd, -)
           if [[ -n "$toppt_input" ]]; then
             if [[ -n "$batchname" ]]; then cmd_common+=(--batchname "$batchname"); fi
-            "${cmd_common[@]}" --userflags "$flag" "${extra_args[@]}" -i "$toppt_input" \
-              &> "log/submit_${era}_ttbar_${trig}__${flag}.log"
+            submit_job "log/submit_${era}_ttbar_${trig}__${flag}.log" \
+              "${cmd_common[@]}" --userflags "$flag" "${extra_args[@]}" -i "$toppt_input"
             echo "[SKNano.py] Run ttbar TopPtReweight study: $flag era: $era"
           fi
         fi
@@ -246,18 +306,18 @@ for trig in "${TriggerSets[@]}"; do
       fi
 
       if $RUN_DT && ! is_systematic_mode "$flag"; then
-        "${cmd_common[@]}" \
-          -i "$data_input" \
-          &> "log/submit_${era}_${dataset//,/_}_${trig}${flag:+__${flag}}.log"
+        submit_job "log/submit_${era}_${dataset//,/_}_${trig}${flag:+__${flag}}.log" \
+          "${cmd_common[@]}" \
+          -i "$data_input"
         echo "[SKNano.py] Run analyzer for data: $dataset trigger: $trig era: $era"
       else
         echo "[SKNano.py] Do not make DATA samples"
       fi
 
       if $RUN_MC; then
-        "${cmd_common[@]}" \
-          -i "$mc_input" \
-          &> "log/submit_${era}_MC_${trig}${flag:+__${flag}}.log"
+        submit_job "log/submit_${era}_MC_${trig}${flag:+__${flag}}.log" \
+          "${cmd_common[@]}" \
+          -i "$mc_input"
         echo "[SKNano.py] Run analyzer for MC backgrounds: $mcset_this trigger: $trig era: $era"
       else
         echo "[SKNano.py] Do not make MC samples"
@@ -266,9 +326,9 @@ for trig in "${TriggerSets[@]}"; do
       if $RUN_SIG && ! is_efficiency_mode "$flag" && [[ "$flag" != "RunXSecSyst" ]]; then
         cmd_signal=("${cmd_common[@]}")
         cmd_signal[6]=1
-        "${cmd_signal[@]}" \
-          -i "$sig_input" \
-          &> "log/submit_${era}_sig_${trig}${flag:+__${flag}}.log"
+        submit_job "log/submit_${era}_sig_${trig}${flag:+__${flag}}.log" \
+          "${cmd_signal[@]}" \
+          -i "$sig_input"
         echo "[SKNano.py] Run analyzer for signals: $signalset trigger: $trig era: $era"
       elif $RUN_SIG && is_efficiency_mode "$flag"; then
         echo "[SKNano.py] Skip signal samples for efficiency mode: $flag"
@@ -280,3 +340,5 @@ for trig in "${TriggerSets[@]}"; do
   done
 done
 
+
+)
