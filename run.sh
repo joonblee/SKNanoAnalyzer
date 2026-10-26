@@ -41,6 +41,12 @@ flags=("" "RunSyst" "RunXSecSyst" "MuonIDEfficiency" "TriggerEfficiency")
 flags=("" "RunSyst" "RunXSecSyst")
 flags=("")
 
+# Optional ttbar-only study: TOP_PT_REWEIGHT=true bash run.sh
+# Output: NIsoMuon/TopPtReweight/[RunSyst|RunXSecSyst/]<era>/
+if [[ "${TOP_PT_REWEIGHT:-false}" == "true" ]]; then
+  flags=("TopPtReweight" "TopPtReweight,RunSyst" "TopPtReweight,RunXSecSyst")
+fi
+
 # analysis setups
 analysis="NIsoMuon"
 skim="Skim_NIsoMuon"
@@ -146,6 +152,25 @@ for trig in "${TriggerSets[@]}"; do
     for flag in "${flags[@]}"; do
 
       cmd_common=(SKNano.py -a "$analysis" -e "$era" -n "$nBatch" --nmax 4000)
+
+      # Submit only the POWHEG ttbar samples for the optional study.
+      # Keep all ordinary production branches below unchanged.
+      if [[ ",$flag," == *",TopPtReweight,"* ]]; then
+        if $RUN_MC; then
+          prefix=""
+          if $UseSkim; then prefix="${skim}_"; fi
+          toppt_input=$(awk -v prefix="$prefix" \
+            '/^[[:space:]]*TT(JJ|LJ|LL)_powheg([_[:alnum:]]*)[[:space:]]*$/ {print prefix $1}' \
+            "$mcset" | paste -sd, -)
+          if [[ -n "$toppt_input" ]]; then
+            if [[ -n "$batchname" ]]; then cmd_common+=(--batchname "$batchname"); fi
+            "${cmd_common[@]}" --userflags "$flag" "${extra_args[@]}" -i "$toppt_input" \
+              &> "log/submit_${era}_ttbar_${trig}__${flag}.log"
+            echo "[SKNano.py] Run ttbar TopPtReweight study: $flag era: $era"
+          fi
+        fi
+        continue
+      fi
 
       echo " - Era: $era"
       echo " - Trigger: $trig"
@@ -254,3 +279,4 @@ for trig in "${TriggerSets[@]}"; do
     done
   done
 done
+

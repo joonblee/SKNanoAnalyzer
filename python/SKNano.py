@@ -426,8 +426,12 @@ def makeMainAnalyzerJobs(working_dir,abs_MasterDirectoryName,totalNumberOfJobs, 
 
 def makeHaddJobs(working_dir,argparser,sample):
     AnalyzerName = argparser.Analyzer
-    if len(userflags) > 0:
-        AnalyzerName += f"/{'_'.join(userflags)}"
+    output_flags = list(userflags)
+    if AnalyzerName == "NIsoMuon" and "TopPtReweight" in output_flags:
+        AnalyzerName += "/TopPtReweight"
+        output_flags.remove("TopPtReweight")
+    if len(output_flags) > 0:
+        AnalyzerName += f"/{'_'.join(output_flags)}"
     era = working_dir.split('/')[-2]
     hadd_target = os.path.join(SKNANO_OUTPUT,AnalyzerName,era,sample+'.root')
     if not os.path.exists(os.path.dirname(hadd_target)):
@@ -648,3 +652,4 @@ if __name__ == '__main__':
                     hadd_layers.append(getEachAnalyzerToPostDag(dag_list[-1]))
             
     getFinalDag(hadd_layers, postproc_layers,abs_MasterDirectoryName, args)
+

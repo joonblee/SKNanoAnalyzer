@@ -685,6 +685,11 @@ float NIsoMuon::CalculateWeight(
 
     float weight = MCweight();
     weight *= ev.GetTriggerLumi("Full");
+    // Optional study; nominal production remains unweighted.
+    if (HasFlag("TopPtReweight") &&
+        MCSample.Contains("TT") && MCSample.Contains("powheg")) {
+        weight *= myCorr->GetTopPtReweight(GetAllGens());
+    }
     weight *= GetL1PrefireWeight(l1PrefireVariation);
     weight *= myCorr->GetPUWeight(ev.nTrueInt(), puVariation);
     weight *= CalculateMuonIDSF(selectedMuons, syst);
@@ -1550,4 +1555,5 @@ void NIsoMuon::executeEvent() {
         }
     }
 }
+
 
