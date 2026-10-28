@@ -6,6 +6,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <limits>
+#include <stdexcept>
 
 namespace {
 constexpr float kLeadingMuonPt = 52.0f;
@@ -1223,6 +1224,12 @@ float NIsoMuon::ReadTheoryWeight(const TString &kind, int index) const {
             return 1.0f;
         }
 
+        if (nLHEScaleWeight != 8 && nLHEScaleWeight != 9) {
+            throw std::runtime_error(
+                "[NIsoMuon::ReadTheoryWeight] Expected 8 or 9 LHEScaleWeight entries."
+            );
+        }
+
         int sourceIndex = -1;
 
         switch (index) {
@@ -1238,6 +1245,12 @@ float NIsoMuon::ReadTheoryWeight(const TString &kind, int index) const {
                 return std::numeric_limits<float>::quiet_NaN();
         }
 
+        // The switch uses the 8-entry grid, which omits (muR,muF)=(1,1).
+        // In a 9-entry grid the central member occupies index 4, shifting
+        // every subsequent variation by one. Do not infer this from the era.
+        if (nLHEScaleWeight == 9 && sourceIndex >= 4) {
+            ++sourceIndex;
+        }
         const float weight = LHEScaleWeight[sourceIndex];
 
         // A malformed/non-finite stored weight should also not remove the
@@ -1557,5 +1570,6 @@ void NIsoMuon::executeEvent() {
         }
     }
 }
+
 
 

@@ -1,5 +1,7 @@
 #include "AnalyzerCore.h"
 
+#include <stdexcept>
+
 AnalyzerCore::AnalyzerCore() : useTH1F(true), myCorr(nullptr), outfile(nullptr) {
     // pdfReweight = new PDFReweight();
 }
@@ -61,14 +63,23 @@ bool AnalyzerCore::PassNoiseFilter(const RVec<Jet> &Alljets, const Event &ev, co
 
 float AnalyzerCore::GetScaleVariation(const MyCorrection::variation &muF_syst, const MyCorrection::variation &muR_syst) {
     if(nLHEScaleWeight == 0) return 1.;
-    if(muF_syst == MyCorrection::variation::down && muR_syst == MyCorrection::variation::down) return LHEScaleWeight[0];
-    else if(muF_syst == MyCorrection::variation::nom && muR_syst == MyCorrection::variation::down) return LHEScaleWeight[1];
-    else if(muF_syst == MyCorrection::variation::up && muR_syst == MyCorrection::variation::down) return LHEScaleWeight[2];
-    else if(muF_syst == MyCorrection::variation::down && muR_syst == MyCorrection::variation::nom) return LHEScaleWeight[3];
-    else if(muF_syst == MyCorrection::variation::up && muR_syst == MyCorrection::variation::nom) return LHEScaleWeight[4];
-    else if(muF_syst == MyCorrection::variation::down && muR_syst == MyCorrection::variation::up) return LHEScaleWeight[5];
-    else if(muF_syst == MyCorrection::variation::nom && muR_syst == MyCorrection::variation::up) return LHEScaleWeight[6];
-    else if(muF_syst == MyCorrection::variation::up && muR_syst == MyCorrection::variation::up) return LHEScaleWeight[7];
+    if(nLHEScaleWeight != 8 && nLHEScaleWeight != 9) {
+        throw std::runtime_error("[AnalyzerCore::GetScaleVariation] Expected 8 or 9 LHEScaleWeight entries.");
+    }
+    // The 9-entry grid includes (muR,muF)=(1,1) at index 4;
+    // the 8-entry grid omits it. Indices below are in the 8-entry convention.
+    const auto scaleWeight = [this](int index) {
+        if(nLHEScaleWeight == 9 && index >= 4) ++index;
+        return LHEScaleWeight[index];
+    };
+    if(muF_syst == MyCorrection::variation::down && muR_syst == MyCorrection::variation::down) return scaleWeight(0);
+    else if(muF_syst == MyCorrection::variation::nom && muR_syst == MyCorrection::variation::down) return scaleWeight(1);
+    else if(muF_syst == MyCorrection::variation::up && muR_syst == MyCorrection::variation::down) return scaleWeight(2);
+    else if(muF_syst == MyCorrection::variation::down && muR_syst == MyCorrection::variation::nom) return scaleWeight(3);
+    else if(muF_syst == MyCorrection::variation::up && muR_syst == MyCorrection::variation::nom) return scaleWeight(4);
+    else if(muF_syst == MyCorrection::variation::down && muR_syst == MyCorrection::variation::up) return scaleWeight(5);
+    else if(muF_syst == MyCorrection::variation::nom && muR_syst == MyCorrection::variation::up) return scaleWeight(6);
+    else if(muF_syst == MyCorrection::variation::up && muR_syst == MyCorrection::variation::up) return scaleWeight(7);
     else if(muF_syst == MyCorrection::variation::nom && muR_syst == MyCorrection::variation::nom) return 1.f;
     else{
         cout << "[AnalyzerCore::GetScaleVariation] muF_syst = " << int(muF_syst) << " and muR_syst = " << int(muR_syst) << " is not implemented" << endl;
@@ -2168,3 +2179,4 @@ void AnalyzerCore::WriteHist() {
     cout << "[AnalyzerCore::WriteHist] Writing histograms done" << endl;
     outfile->Close();
 }
+

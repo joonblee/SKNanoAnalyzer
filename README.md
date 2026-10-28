@@ -1,6 +1,20 @@
 # SKNanoAnalyzer
 **v1.0.1**
 
+## LHE scale weights in NIsoMuon
+
+`NIsoMuon::ReadTheoryWeight` and `AnalyzerCore::GetScaleVariation` support
+both the 8-entry NanoAOD scale grid (central member omitted) and the 9-entry
+grid (central member at raw index 4). Mapping is selected by
+`nLHEScaleWeight`, independently of the data-taking era. The output
+`PDFScale0..8` convention is unchanged. In particular, muF Up/Down use
+raw indices 4/3 for eight entries and 5/3 for nine entries.
+
+Previously produced 9-entry scale templates must be regenerated with
+`RunXSecSyst`, remerged, and propagated to new cards, limits and impacts.
+Run the ROOT-independent mapping regression test with
+`python3 scripts/test_lhe_scale_weights.py` (requires a C++ compiler).
+
 ## Introduction
 - For setting up the environment and starting the analysis, please refer [Getting Started](docs/GettingStarted.md).
 - If you want to engage in the development and commit to the repository, please read [Development Guide](docs/DevelopmentGuide.md) first.
@@ -68,3 +82,4 @@ Study outputs are kept below `NIsoMuon/TopPtReweight/<era>/`,
 `NIsoMuon/TopPtReweight/RunXSecSyst/<era>/`. Ordinary production paths are unchanged.
 
 SKNano also accepts `Run2`, `Run3`, and `Run2+3` (alias `all`).
+
